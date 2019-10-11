@@ -5,7 +5,7 @@ api for fetching data from yr.no in xml format and converting it into a minimize
 url input format: "https://www.yr.no/place/Norway/Tr%C3%B8ndelag/Trondheim/Trondheim/forecast.xml"
 
 json output format:
-´´´javascript
+```json
 {
   "name": "Trondheim",
   "fetched": "2019-9-10T19:48:50",
@@ -40,7 +40,7 @@ json output format:
     }
   ]
 }
-´´´
+```
 
 symbol is used to fetch png from url on format:
 https://yr.github.io/weather-symbols/png/100/< symbol >.png
