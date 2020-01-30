@@ -38,7 +38,8 @@ json output format:
       "rain": { "value": "0" },
       "temperature": "8"
     }
-  ]
+  ],
+  "url": "https://www.yr.no/place/Norway/Tr%C3%B8ndelag/Trondheim/Trondheim/forecast.xml",
 }
 ```
 

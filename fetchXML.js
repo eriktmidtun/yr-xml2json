@@ -3,15 +3,21 @@ const convert = require('xml-js');
 const fs = require('fs');
 
 
-const fetchXML = (url , numberOfForecasts = 4) => {
-    unirest.get(url).end( result => {
-        const xml = result.body;
-        const js = convert.xml2js(xml, {compact: true, spaces: 1});
-        const n = numberOfForecasts - 1 //number of forecasts, 0-indexed
-        const finalObj = parse(js, n) 
-        const file =  JSON.stringify(parse(js, n));
-        writeToFile( file );
-        return finalObj;
+const fetchXML = (url , numberOfForecasts = 5) => {
+    unirest.get(url).end( response => {
+        if ( response.error ) { //return error object
+            return response.error
+        }
+        else {
+            const xml = response.body;
+            const js = convert.xml2js(xml, {compact: true, spaces: 1});
+            // const n = numberOfForecasts  //number of forecasts, 0-indexed
+            const finalObj = parse(js, numberOfForecasts ) 
+            finalObj["url"] = url;
+            const file =  JSON.stringify(finalObj);
+            writeToFile( file );
+            return finalObj;
+        }
     });
 }
 
@@ -34,7 +40,7 @@ const parse = ( obj, n ) => {
     json["name"] = location;;
     json["fetched"] = getTime();
     //making the object to the specs like in readme
-    for (i = 0; i <= Math.min(n, time.length); i++) {
+    for (i = 0; i <= Math.min(n, time.length) -1 ; i++) {
         let obj = {};
         const t = time[i]
         obj["from"] = t._attributes.from;
@@ -63,4 +69,4 @@ const getTime = () => {
 
 
 url = "https://www.yr.no/place/Norway/Tr%C3%B8ndelag/Trondheim/Trondheim/forecast.xml";
-fetchXML(url); 
+fetchXML(url ); 
